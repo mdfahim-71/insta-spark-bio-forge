@@ -1,10 +1,11 @@
 
 import { ThemeToggle } from "./ThemeToggle";
 import { Sparkles } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export const Header = () => {
   const [sparkleOpacity, setSparkleOpacity] = useState<number[]>([]);
+  const headerRef = useRef<HTMLDivElement>(null);
   
   // Create randomized sparkle animation effect
   useEffect(() => {
@@ -19,11 +20,30 @@ export const Header = () => {
       );
     }, 1500);
     
-    return () => clearInterval(interval);
+    // Add smooth scroll behavior
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      if (headerRef.current) {
+        if (scrollPosition > 10) {
+          headerRef.current.classList.add('shadow-sm', 'bg-background/80', 'backdrop-blur-sm');
+        } else {
+          headerRef.current.classList.remove('shadow-sm', 'bg-background/80', 'backdrop-blur-sm');
+        }
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
-    <header className="w-full pt-6 pb-4">
+    <header 
+      ref={headerRef} 
+      className="w-full pt-6 pb-4 sticky top-0 z-30 transition-all duration-300"
+    >
       <div className="container flex items-center justify-between">
         <div className="flex items-center gap-2 animate-fade-in">
           <div className="relative">

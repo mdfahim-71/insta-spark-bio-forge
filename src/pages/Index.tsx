@@ -11,11 +11,23 @@ type TabOption = "captions" | "bios" | "hashtags";
 const Index = () => {
   const [activeTab, setActiveTab] = useState<TabOption>("captions");
   const [mounted, setMounted] = useState(false);
+  const [tabChanging, setTabChanging] = useState(false);
 
   // Animation effect on mount
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Handle tab change with smooth transitions
+  const handleTabChange = (tab: TabOption) => {
+    if (tab !== activeTab) {
+      setTabChanging(true);
+      setTimeout(() => {
+        setActiveTab(tab);
+        setTimeout(() => setTabChanging(false), 50);
+      }, 200);
+    }
+  };
 
   return (
     <div className={`min-h-screen bg-background pb-20 ${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
@@ -33,10 +45,10 @@ const Index = () => {
         </div>
         
         <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-          <TabNavigation activeTab={activeTab} onChange={setActiveTab} />
+          <TabNavigation activeTab={activeTab} onChange={handleTabChange} />
         </div>
         
-        <div className="animate-rotate-in" style={{ animationDelay: '0.4s' }}>
+        <div className={`transition-all duration-300 ${tabChanging ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'}`}>
           {activeTab === "captions" && <CaptionGenerator />}
           {activeTab === "bios" && <BioGenerator />}
           {activeTab === "hashtags" && <HashtagGenerator />}

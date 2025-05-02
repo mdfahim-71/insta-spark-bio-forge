@@ -47,6 +47,15 @@
   animation: shimmer 2s linear infinite;
 }
 
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
 .stagger-item {
   opacity: 0;
 }
@@ -95,4 +104,27 @@
 
 .hover-scale-subtle:hover {
   transform: scale(1.03);
+}
+
+/* Smooth scroll across the app */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Smooth page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translate3d(0, 15px, 0);
+}
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 300ms, transform 300ms;
+}
+.page-transition-exit {
+  opacity: 1;
+}
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
 }
