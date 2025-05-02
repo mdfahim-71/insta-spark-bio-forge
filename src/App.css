@@ -34,3 +34,65 @@
     animation: logo-spin infinite 20s linear;
   }
 }
+
+/* Advanced animation effects */
+.shimmer-effect {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(155, 135, 245, 0.2) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+.stagger-item {
+  opacity: 0;
+}
+
+.stagger-1 { animation: fade-in 0.5s ease forwards 0.1s; }
+.stagger-2 { animation: fade-in 0.5s ease forwards 0.2s; }
+.stagger-3 { animation: fade-in 0.5s ease forwards 0.3s; }
+.stagger-4 { animation: fade-in 0.5s ease forwards 0.4s; }
+.stagger-5 { animation: fade-in 0.5s ease forwards 0.5s; }
+
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 15px rgba(155, 135, 245, 0.5);
+  transform: translateY(-3px);
+}
+
+.tab-indicator {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Character animation for text reveal */
+.reveal-text {
+  opacity: 0;
+  animation: fade-in 0.6s forwards;
+}
+
+.reveal-text span {
+  opacity: 0;
+  display: inline-block;
+}
+
+.hover-scale-subtle {
+  transition: transform 0.2s ease;
+}
+
+.hover-scale-subtle:hover {
+  transform: scale(1.03);
+}

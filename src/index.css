@@ -97,11 +97,11 @@
 
 @layer components {
   .generator-card {
-    @apply rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-md;
+    @apply rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-md hover-lift;
   }
   
   .result-item {
-    @apply rounded-lg border bg-background p-4 relative;
+    @apply rounded-lg border bg-background p-4 relative hover-glow;
   }
   
   .gradient-text {
@@ -131,6 +131,46 @@
   
   .animate-pulse-border {
     animation: pulseBorder 2s infinite;
+  }
+  
+  /* New advanced animations */
+  .text-reveal-animation span {
+    display: inline-block;
+    opacity: 0;
+    animation: textReveal 0.5s forwards;
+  }
+  
+  .magnetic-button {
+    transition: transform 0.2s ease;
+  }
+  
+  .shimmer-border {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer-border::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      90deg, 
+      transparent 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 100%
+    );
+    animation: shimmerBorder 2s infinite linear;
+  }
+  
+  .rotate-hover {
+    transition: transform 0.3s ease;
+  }
+  
+  .rotate-hover:hover {
+    transform: rotate(5deg);
   }
 }
 
@@ -178,6 +218,35 @@
   }
   100% {
     border-color: transparent;
+  }
+}
+
+@keyframes shimmerBorder {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes textReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) rotateX(-90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+@keyframes floatingElements {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
   }
 }
 
