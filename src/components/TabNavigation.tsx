@@ -1,8 +1,5 @@
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { MessageSquare, UserRound, Hash } from "lucide-react";
 
 type TabOption = "captions" | "bios" | "hashtags";
 
@@ -11,52 +8,30 @@ interface TabNavigationProps {
   onChange: (tab: TabOption) => void;
 }
 
-export const TabNavigation = ({ activeTab, onChange }: TabNavigationProps) => {
+export const TabNavigation = ({
+  activeTab,
+  onChange,
+}: TabNavigationProps) => {
   return (
-    <div className="w-full flex justify-center mb-8">
-      <div className="inline-flex items-center bg-secondary rounded-lg p-1 shadow-sm">
-        <TabButton 
-          isActive={activeTab === "captions"} 
-          onClick={() => onChange("captions")}
-          icon={<MessageSquare className="h-4 w-4 mr-2" />}
-          label="Captions"
-        />
-        <TabButton 
-          isActive={activeTab === "bios"} 
-          onClick={() => onChange("bios")}
-          icon={<UserRound className="h-4 w-4 mr-2" />}
-          label="Bio"
-        />
-        <TabButton 
-          isActive={activeTab === "hashtags"} 
-          onClick={() => onChange("hashtags")}
-          icon={<Hash className="h-4 w-4 mr-2" />}
-          label="Hashtags"
-        />
-      </div>
+    <div className="grid grid-cols-3 gap-2 mb-6 rounded-xl border bg-background p-1">
+      {[
+        { id: "captions", label: "Captions" },
+        { id: "bios", label: "Bios" },
+        { id: "hashtags", label: "Hashtags" },
+      ].map((tab) => (
+        <button
+          key={tab.id}
+          onClick={() => onChange(tab.id as TabOption)}
+          className={cn(
+            "flex items-center justify-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200",
+            activeTab === tab.id
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:bg-muted"
+          )}
+        >
+          {tab.label}
+        </button>
+      ))}
     </div>
-  );
-};
-
-interface TabButtonProps {
-  isActive: boolean;
-  onClick: () => void;
-  icon: React.ReactNode;
-  label: string;
-}
-
-const TabButton = ({ isActive, onClick, icon, label }: TabButtonProps) => {
-  return (
-    <Button
-      variant="ghost"
-      onClick={onClick}
-      className={cn(
-        "rounded-md px-4 py-2 transition-all",
-        isActive && "bg-background shadow-sm"
-      )}
-    >
-      {icon}
-      {label}
-    </Button>
   );
 };

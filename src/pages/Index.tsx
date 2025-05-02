@@ -16,7 +16,7 @@ const Index = () => {
       <Header />
       
       <main className="container max-w-4xl mx-auto px-4 mb-20">
-        <div className="text-center my-10">
+        <div className="text-center my-10 animate-fade-in">
           <h2 className="text-3xl font-bold tracking-tight mb-3">
             Social Media Caption &amp; Bio Generator
           </h2>
@@ -28,9 +28,11 @@ const Index = () => {
         
         <TabNavigation activeTab={activeTab} onChange={setActiveTab} />
         
-        {activeTab === "captions" && <CaptionGenerator />}
-        {activeTab === "bios" && <BioGenerator />}
-        {activeTab === "hashtags" && <HashtagGenerator />}
+        <div className="animate-slide-up">
+          {activeTab === "captions" && <CaptionGenerator />}
+          {activeTab === "bios" && <BioGenerator />}
+          {activeTab === "hashtags" && <HashtagGenerator />}
+        </div>
       </main>
       
       <footer className="fixed bottom-0 left-0 right-0 border-t bg-background/80 backdrop-blur-sm py-3">
