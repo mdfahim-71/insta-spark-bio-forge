@@ -98,11 +98,11 @@
 
 @layer components {
   .generator-card {
-    @apply rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-md hover-lift;
+    @apply rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-md;
   }
   
   .result-item {
-    @apply rounded-lg border bg-background p-4 relative hover-glow;
+    @apply rounded-lg border bg-background p-4 relative;
   }
   
   .gradient-text {
@@ -234,6 +234,37 @@
   .tab-exit-active {
     opacity: 0;
     transform: translateY(-10px);
+  }
+  
+  /* Professional style enhancements */
+  .professional-shadow {
+    box-shadow: 
+      0 1px 3px rgba(0,0,0,0.05),
+      0 4px 6px rgba(0,0,0,0.05), 
+      0 10px 20px rgba(0,0,0,0.025);
+  }
+  
+  .glow-on-hover {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .glow-on-hover::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #9b87f5, #e779c1);
+    z-index: -1;
+    opacity: 0;
+    border-radius: calc(var(--radius) + 2px);
+    transition: opacity 0.3s ease;
+  }
+  
+  .glow-on-hover:hover::after {
+    opacity: 0.5;
   }
 }
 

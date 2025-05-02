@@ -2,6 +2,7 @@
 import { ThemeToggle } from "./ThemeToggle";
 import { Sparkles } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import { Button } from "@/components/ui/button";
 
 export const Header = () => {
   const [sparkleOpacity, setSparkleOpacity] = useState<number[]>([]);
@@ -39,6 +40,13 @@ export const Header = () => {
     };
   }, []);
 
+  const scrollToFAQ = () => {
+    const faqSection = document.getElementById('faq');
+    if (faqSection) {
+      faqSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header 
       ref={headerRef} 
@@ -68,6 +76,13 @@ export const Header = () => {
           </h1>
         </div>
         <div className="flex items-center gap-4">
+          <Button 
+            variant="ghost" 
+            onClick={scrollToFAQ}
+            className="hover:bg-primary/10 hidden md:flex"
+          >
+            FAQ
+          </Button>
           <ThemeToggle />
         </div>
       </div>
