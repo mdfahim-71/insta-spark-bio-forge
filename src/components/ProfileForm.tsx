@@ -104,7 +104,7 @@ export const ProfileForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex items-center gap-2">
-                      <LinkIcon className="h-4 w-4" /> Social Media Link
+                      <Link className="h-4 w-4" /> Social Media Link
                     </FormLabel>
                     <FormControl>
                       <Input placeholder="https://twitter.com/username" {...field} className="hover-scale-subtle" />
@@ -127,7 +127,7 @@ export const ProfileForm = () => {
           </Form>
         </div>
         
-        {/* Live Preview Section - Replace with BioPreview component */}
+        {/* Live Preview Section */}
         <div className="card-enhanced p-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
           <h2 className="text-2xl font-bold mb-6 gradient-text">Live Preview</h2>
           
