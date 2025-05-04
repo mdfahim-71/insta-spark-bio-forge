@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Link, User } from "lucide-react";
 import { BioPreview } from "@/components/BioPreview";
+import { toast } from "@/hooks/use-toast";
 
 // Form validation schema
 const formSchema = z.object({
@@ -18,6 +19,9 @@ const formSchema = z.object({
 });
 
 type ProfileFormValues = z.infer<typeof formSchema>;
+
+// LocalStorage key
+const STORAGE_KEY = "user_profile_data";
 
 export const ProfileForm = () => {
   // Initialize with default values
@@ -36,9 +40,64 @@ export const ProfileForm = () => {
   const watchAllFields = form.watch();
   const [charCount, setCharCount] = useState(0);
 
+  // Load data from localStorage on component mount
+  useEffect(() => {
+    try {
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      
+      if (savedData) {
+        const parsedData = JSON.parse(savedData) as Partial<ProfileFormValues>;
+        
+        // Reset form with saved values
+        form.reset(parsedData);
+        
+        // Update character count if bio exists
+        if (parsedData.bio) {
+          setCharCount(parsedData.bio.length);
+        }
+        
+        toast({
+          title: "Profile loaded",
+          description: "Your saved profile data has been loaded successfully",
+        });
+      }
+    } catch (error) {
+      console.error("Error loading data from localStorage:", error);
+    }
+  }, [form]);
+
+  // Save data to localStorage whenever form values change
+  useEffect(() => {
+    const subscription = form.watch((data) => {
+      if (data.name || data.bio || data.socialLink) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch (error) {
+          console.error("Error saving to localStorage:", error);
+        }
+      }
+    });
+    
+    return () => subscription.unsubscribe();
+  }, [form]);
+
   const onSubmit = (data: ProfileFormValues) => {
     console.log("Form submitted:", data);
-    // Here you would typically send the data to an API
+    // Save to localStorage on explicit submit
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      toast({
+        title: "Profile saved!",
+        description: "Your profile has been saved successfully",
+      });
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+      toast({
+        title: "Save failed",
+        description: "Could not save your profile data",
+        variant: "destructive",
+      });
+    }
   };
 
   // Handle character count for bio
