@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -111,91 +112,116 @@ export const ProfileForm = () => {
     <div className="container max-w-4xl mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Form Section */}
-        <div className="card-enhanced p-6 animate-fade-in">
-          <h2 className="text-2xl font-bold mb-6 gradient-text">Profile Information</h2>
+        <Card className="overflow-hidden shadow-lg border-0 bg-card/50 backdrop-blur-sm transition-all duration-300">
+          <CardHeader className="pb-2 border-b bg-gradient-to-r from-primary/10 to-primary/5">
+            <CardTitle className="text-xl font-semibold flex items-center gap-2">
+              <User className="h-5 w-5 text-primary" />
+              Profile Information
+            </CardTitle>
+          </CardHeader>
           
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="flex items-center gap-2">
-                      <User className="h-4 w-4" /> Your Name
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="John Doe" {...field} className="hover-scale-subtle" />
-                    </FormControl>
-                    <FormDescription>
-                      Your full name as you'd like it to appear
-                    </FormDescription>
-                  </FormItem>
-                )}
-              />
-              
-              <FormField
-                control={form.control}
-                name="bio"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="flex items-center gap-2">
-                      <span className="flex items-center gap-2">Bio <span className="text-xs text-muted-foreground">({charCount}/160)</span></span>
-                    </FormLabel>
-                    <FormControl>
-                      <Textarea 
-                        placeholder="Tell us a little about yourself..." 
-                        className="resize-none hover-scale-subtle"
-                        {...field}
-                        onChange={handleBioChange}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      A short bio to introduce yourself
-                    </FormDescription>
-                  </FormItem>
-                )}
-              />
-              
-              <FormField
-                control={form.control}
-                name="socialLink"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="flex items-center gap-2">
-                      <Link className="h-4 w-4" /> Social Media Link
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="https://twitter.com/username" {...field} className="hover-scale-subtle" />
-                    </FormControl>
-                    <FormDescription>
-                      Your primary social media profile
-                    </FormDescription>
-                  </FormItem>
-                )}
-              />
-              
-              <Button 
-                type="submit" 
-                className="w-full hover-glow"
-                disabled={!form.formState.isValid}
-              >
-                Save Profile
-              </Button>
-            </form>
-          </Form>
-        </div>
+          <CardContent className="p-6">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-sm font-medium">
+                        <User className="h-4 w-4" /> Your Name
+                      </FormLabel>
+                      <FormControl>
+                        <Input 
+                          placeholder="John Doe" 
+                          {...field} 
+                          className="transition-all duration-200 hover:border-primary focus:border-primary" 
+                        />
+                      </FormControl>
+                      <FormDescription className="text-xs">
+                        Your full name as you'd like it to appear
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="bio"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center justify-between text-sm font-medium">
+                        <span>Bio</span>
+                        <span className="text-xs text-muted-foreground">
+                          {charCount}/160
+                        </span>
+                      </FormLabel>
+                      <FormControl>
+                        <Textarea 
+                          placeholder="Tell us a little about yourself..." 
+                          className="resize-none transition-all duration-200 min-h-[100px]"
+                          {...field}
+                          onChange={handleBioChange}
+                        />
+                      </FormControl>
+                      <FormDescription className="text-xs">
+                        A short bio to introduce yourself
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="socialLink"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-sm font-medium">
+                        <Link className="h-4 w-4" /> Social Media Link
+                      </FormLabel>
+                      <FormControl>
+                        <Input 
+                          placeholder="https://twitter.com/username" 
+                          {...field} 
+                          className="transition-all duration-200 hover:border-primary focus:border-primary" 
+                        />
+                      </FormControl>
+                      <FormDescription className="text-xs">
+                        Your primary social media profile
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+                
+                <Button 
+                  type="submit" 
+                  className="w-full transition-all duration-300 bg-gradient-to-r from-primary to-brand-pink hover:shadow-md hover:shadow-primary/20 hover:-translate-y-1"
+                  disabled={!form.formState.isValid}
+                >
+                  Save Profile
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
         
         {/* Live Preview Section */}
-        <div className="card-enhanced p-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <h2 className="text-2xl font-bold mb-6 gradient-text">Live Preview</h2>
+        <Card className="overflow-hidden shadow-lg border-0 bg-card/50 backdrop-blur-sm transition-all duration-300">
+          <CardHeader className="pb-2 border-b bg-gradient-to-r from-primary/10 to-primary/5">
+            <CardTitle className="text-xl font-semibold flex items-center gap-2">
+              <User className="h-5 w-5 text-primary" />
+              Live Preview
+            </CardTitle>
+          </CardHeader>
           
-          <BioPreview 
-            name={watchAllFields.name} 
-            bio={watchAllFields.bio}
-            socialLink={watchAllFields.socialLink}
-          />
-        </div>
+          <CardContent className="p-6">
+            <BioPreview 
+              name={watchAllFields.name} 
+              bio={watchAllFields.bio}
+              socialLink={watchAllFields.socialLink}
+            />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

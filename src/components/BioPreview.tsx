@@ -65,10 +65,10 @@ export const BioPreview = ({ name, bio, socialLink }: BioPreviewProps) => {
   };
 
   return (
-    <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg animate-fade-in">
-      <CardHeader className="bg-gradient-primary p-6">
+    <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg animate-fade-in border border-border/50">
+      <CardHeader className="bg-gradient-to-r from-primary to-brand-pink p-6">
         <div className="flex items-center gap-4">
-          <div className="h-16 w-16 rounded-full bg-background/90 flex items-center justify-center shadow-sm">
+          <div className="h-16 w-16 rounded-full bg-background/90 flex items-center justify-center shadow-sm transition-transform hover:scale-105 duration-300">
             {initials ? (
               <span className="text-xl font-semibold text-primary">{initials}</span>
             ) : (
@@ -91,13 +91,13 @@ export const BioPreview = ({ name, bio, socialLink }: BioPreviewProps) => {
                     href={socialLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-primary-foreground/80 flex items-center gap-1 hover:underline mt-1"
+                    className="text-sm text-primary-foreground/80 flex items-center gap-1 hover:underline mt-1 transition-all duration-200 hover:text-primary-foreground"
                   >
                     <LinkIcon className="h-3 w-3" />
                     {socialLinkFormatted}
                   </a>
                 </HoverCardTrigger>
-                <HoverCardContent className="w-auto p-2">
+                <HoverCardContent className="w-auto p-2 animate-fade-in">
                   <span className="text-xs">{socialLink}</span>
                 </HoverCardContent>
               </HoverCard>
@@ -122,11 +122,11 @@ export const BioPreview = ({ name, bio, socialLink }: BioPreviewProps) => {
       <CardFooter className="bg-muted/30 px-6 py-4 border-t flex flex-col gap-3">
         <div className="w-full">
           {name && bio ? (
-            <div className="bg-primary/10 p-2 rounded text-center">
+            <div className="bg-primary/10 p-2 rounded-md text-center">
               <span className="text-sm font-medium text-primary">Profile complete! ✨</span>
             </div>
           ) : (
-            <div className="bg-muted p-2 rounded text-center">
+            <div className="bg-muted p-2 rounded-md text-center">
               <span className="text-sm text-muted-foreground">Add more details to complete your profile</span>
             </div>
           )}
@@ -134,7 +134,7 @@ export const BioPreview = ({ name, bio, socialLink }: BioPreviewProps) => {
         
         <Button 
           variant="outline" 
-          className="w-full flex items-center justify-center gap-2 transition-all" 
+          className="w-full flex items-center justify-center gap-2 transition-all hover:bg-primary/10" 
           onClick={handleCopyLink}
           disabled={!name}
         >
