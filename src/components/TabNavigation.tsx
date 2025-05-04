@@ -2,16 +2,18 @@
 import { cn } from "@/lib/utils";
 import { useRef, useEffect, useState } from "react";
 
-type TabOption = "captions" | "bios" | "hashtags";
+export type TabOption = "captions" | "bios" | "hashtags" | "profile";
 
 interface TabNavigationProps {
   activeTab: TabOption;
   onChange: (tab: TabOption) => void;
+  tabs: { id: string; label: string }[];
 }
 
 export const TabNavigation = ({
   activeTab,
   onChange,
+  tabs,
 }: TabNavigationProps) => {
   const tabsRef = useRef<HTMLDivElement>(null);
   const indicatorRef = useRef<HTMLDivElement>(null);
@@ -44,7 +46,7 @@ export const TabNavigation = ({
   return (
     <div 
       ref={tabsRef} 
-      className="grid grid-cols-3 gap-2 mb-6 rounded-xl border bg-background p-1 relative animate-fade-in card-hover"
+      className="grid grid-cols-4 gap-2 mb-6 rounded-xl border bg-background p-1 relative animate-fade-in card-hover"
     >
       {/* Tab indicator */}
       <div 
@@ -56,11 +58,7 @@ export const TabNavigation = ({
         aria-hidden="true"
       />
       
-      {[
-        { id: "captions", label: "Captions" },
-        { id: "bios", label: "Bios" },
-        { id: "hashtags", label: "Hashtags" },
-      ].map((tab, index) => (
+      {tabs.map((tab, index) => (
         <button
           key={tab.id}
           data-tab-id={tab.id}

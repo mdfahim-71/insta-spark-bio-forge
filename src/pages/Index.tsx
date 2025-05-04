@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
-import { TabNavigation } from "@/components/TabNavigation";
+import { TabNavigation, TabOption } from "@/components/TabNavigation";
 import { CaptionGenerator } from "@/components/generators/CaptionGenerator";
 import { BioGenerator } from "@/components/generators/BioGenerator";
 import { HashtagGenerator } from "@/components/generators/HashtagGenerator";
@@ -9,8 +9,6 @@ import { ProfileForm } from "@/components/ProfileForm";
 import { FAQ } from "@/components/FAQ";
 import { Button } from "@/components/ui/button";
 import { ArrowUpCircle } from "lucide-react";
-
-type TabOption = "captions" | "bios" | "hashtags" | "profile";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState<TabOption>("captions");
@@ -63,7 +61,7 @@ const Index = () => {
         <div className="animate-fade-in bg-card shadow-md rounded-xl p-6 mb-16" style={{ animationDelay: '0.3s' }}>
           <TabNavigation 
             activeTab={activeTab} 
-            onChange={handleTabChange as (tab: string) => void}
+            onChange={handleTabChange}
             tabs={[
               { id: "captions", label: "Captions" },
               { id: "bios", label: "Bios" },
