@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Link, User } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { BioPreview } from "@/components/BioPreview";
 
 // Form validation schema
 const formSchema = z.object({
@@ -104,7 +104,7 @@ export const ProfileForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex items-center gap-2">
-                      <Link className="h-4 w-4" /> Social Media Link
+                      <LinkIcon className="h-4 w-4" /> Social Media Link
                     </FormLabel>
                     <FormControl>
                       <Input placeholder="https://twitter.com/username" {...field} className="hover-scale-subtle" />
@@ -127,69 +127,17 @@ export const ProfileForm = () => {
           </Form>
         </div>
         
-        {/* Live Preview Section */}
+        {/* Live Preview Section - Replace with BioPreview component */}
         <div className="card-enhanced p-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
           <h2 className="text-2xl font-bold mb-6 gradient-text">Live Preview</h2>
           
-          <div className="border rounded-lg p-6 bg-background/50 flex flex-col gap-4">
-            <div className="flex items-center gap-4">
-              <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center">
-                {watchAllFields.name ? (
-                  <span className="text-xl font-semibold">
-                    {watchAllFields.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
-                  </span>
-                ) : (
-                  <User className="h-6 w-6 text-primary" />
-                )}
-              </div>
-              <div>
-                <h3 className={cn("text-xl font-bold", watchAllFields.name ? "" : "text-muted-foreground")}>
-                  {watchAllFields.name || "Your Name"}
-                </h3>
-                {watchAllFields.socialLink && (
-                  <a 
-                    href={watchAllFields.socialLink} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-sm text-primary flex items-center gap-1 hover:underline"
-                  >
-                    <Link className="h-3 w-3" /> 
-                    {watchAllFields.socialLink.replace(/(^\w+:|^)\/\//, '').split('/')[0]}
-                  </a>
-                )}
-              </div>
-            </div>
-            
-            <div className="mt-4">
-              <p className={cn("text-muted-foreground italic", watchAllFields.bio ? "text-foreground not-italic" : "")}>
-                {watchAllFields.bio || "Your bio will appear here..."}
-              </p>
-            </div>
-            
-            <div className="mt-4 text-xs text-muted-foreground">
-              {watchAllFields.name && watchAllFields.bio ? (
-                <div className="bg-primary/10 p-2 rounded text-center">
-                  Profile preview complete! ✨
-                </div>
-              ) : (
-                <div className="bg-muted p-2 rounded text-center">
-                  Add more details to complete your profile
-                </div>
-              )}
-            </div>
-          </div>
-          
-          <div className="mt-6 p-4 border border-dashed rounded-lg bg-muted/30">
-            <h4 className="font-medium mb-2 text-sm">Preview Tips</h4>
-            <ul className="text-xs text-muted-foreground space-y-1">
-              <li>• Your initials will display if you provide your name</li>
-              <li>• Links will be formatted automatically</li>
-              <li>• Keep your bio concise for best appearance</li>
-            </ul>
-          </div>
+          <BioPreview 
+            name={watchAllFields.name} 
+            bio={watchAllFields.bio}
+            socialLink={watchAllFields.socialLink}
+          />
         </div>
       </div>
     </div>
   );
 };
-
