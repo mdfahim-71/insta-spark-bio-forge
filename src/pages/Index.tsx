@@ -5,11 +5,12 @@ import { TabNavigation } from "@/components/TabNavigation";
 import { CaptionGenerator } from "@/components/generators/CaptionGenerator";
 import { BioGenerator } from "@/components/generators/BioGenerator";
 import { HashtagGenerator } from "@/components/generators/HashtagGenerator";
+import { ProfileForm } from "@/components/ProfileForm";
 import { FAQ } from "@/components/FAQ";
 import { Button } from "@/components/ui/button";
 import { ArrowUpCircle } from "lucide-react";
 
-type TabOption = "captions" | "bios" | "hashtags";
+type TabOption = "captions" | "bios" | "hashtags" | "profile";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState<TabOption>("captions");
@@ -60,12 +61,22 @@ const Index = () => {
         </div>
         
         <div className="animate-fade-in bg-card shadow-md rounded-xl p-6 mb-16" style={{ animationDelay: '0.3s' }}>
-          <TabNavigation activeTab={activeTab} onChange={handleTabChange} />
+          <TabNavigation 
+            activeTab={activeTab} 
+            onChange={handleTabChange as (tab: string) => void}
+            tabs={[
+              { id: "captions", label: "Captions" },
+              { id: "bios", label: "Bios" },
+              { id: "hashtags", label: "Hashtags" },
+              { id: "profile", label: "Profile Form" }
+            ]}
+          />
           
           <div className={`transition-all duration-300 ${tabChanging ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'}`}>
             {activeTab === "captions" && <CaptionGenerator />}
             {activeTab === "bios" && <BioGenerator />}
             {activeTab === "hashtags" && <HashtagGenerator />}
+            {activeTab === "profile" && <ProfileForm />}
           </div>
         </div>
         
