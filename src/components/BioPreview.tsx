@@ -1,8 +1,10 @@
 
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { User, Link as LinkIcon } from "lucide-react";
+import { User, Link as LinkIcon, Copy } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 
 interface BioPreviewProps {
   name: string;
@@ -33,6 +35,34 @@ export const BioPreview = ({ name, bio, socialLink }: BioPreviewProps) => {
         .toUpperCase()
         .slice(0, 2)
     : "";
+    
+  // Generate a username for the bio link
+  const generateUsername = (name: string) => {
+    if (!name) return "profile";
+    return name.toLowerCase().replace(/\s+/g, "-");
+  };
+  
+  // Handle copying the bio link to clipboard
+  const handleCopyLink = () => {
+    const username = generateUsername(name);
+    const bioLink = `/user/${username}`;
+    
+    navigator.clipboard.writeText(bioLink)
+      .then(() => {
+        toast({
+          title: "Link copied!",
+          description: `${bioLink} has been copied to your clipboard`,
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to copy link:", error);
+        toast({
+          title: "Copy failed",
+          description: "Could not copy the link to clipboard",
+          variant: "destructive",
+        });
+      });
+  };
 
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg animate-fade-in">
@@ -89,7 +119,7 @@ export const BioPreview = ({ name, bio, socialLink }: BioPreviewProps) => {
         </div>
       </CardContent>
 
-      <CardFooter className="bg-muted/30 px-6 py-4 border-t">
+      <CardFooter className="bg-muted/30 px-6 py-4 border-t flex flex-col gap-3">
         <div className="w-full">
           {name && bio ? (
             <div className="bg-primary/10 p-2 rounded text-center">
@@ -101,6 +131,15 @@ export const BioPreview = ({ name, bio, socialLink }: BioPreviewProps) => {
             </div>
           )}
         </div>
+        
+        <Button 
+          variant="outline" 
+          className="w-full flex items-center justify-center gap-2 transition-all" 
+          onClick={handleCopyLink}
+          disabled={!name}
+        >
+          <Copy className="h-4 w-4" /> Copy Bio Link
+        </Button>
       </CardFooter>
     </Card>
   );
